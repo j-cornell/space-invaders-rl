@@ -16,7 +16,7 @@ BULLET_COLOR = numpy.array([142, 142, 142], numpy.uint8)
 
 def detect_player_x(state):
 	for x in range(PLAYER_X_MIN, PLAYER_X_RANGE):
-		if (state[player_y][x] == PLAYER_COLOR).all():
+		if (state[PLAYER_Y][x] == PLAYER_COLOR).all():
 			return x
 	return None
 
