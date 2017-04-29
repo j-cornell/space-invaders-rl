@@ -1,4 +1,4 @@
-#import vision
+import vision
 import math
 
 PLAYER_BITS = 3
@@ -18,18 +18,17 @@ class ReducedState(object):
 def reduce_player(position):
 	return int((position - vision.PLAYER_X_MIN) / (vision.PLAYER_X_MAX - vision.PLAYER_X_MIN) * 2 ** PLAYER_BITS)
 
-def reduce_bullet(position, player_position):
-	(px, py) = player_position
-	resolution = 2 ** (BULLET_BITS / 2)
+def reduce_bullet(position, player_x):
+	resolution = int(math.sqrt(BULLET_BITS))
 
 	def angle(position):
 		(x, y) = position
-		return int(math.atan2(y - py, x - px) / math.pi * resolution)
+		return int(math.atan2(y - vision.PLAYER_Y, x - player_x) / math.pi * resolution)
 
 	def radius(position):
 		(x, y) = position
 		max_radius = math.sqrt((vision.BULLET_RIGHT - vision.BULLET_LEFT) ** 2 + (vision.BULLET_TOP - vision.BULLET_BOTTOM) ** 2)
-		radius = math.sqrt((x - px) ** 2 + (y - py) ** 2)
+		radius = math.sqrt((x - player_x) ** 2 + (y - vision.PLAYER_Y) ** 2)
 		return int(math.log(radius) / math.log(max_radius) * resolution)
 	
 	return (radius(position), angle(position))
