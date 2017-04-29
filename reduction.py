@@ -27,6 +27,7 @@ def reduce_bullet(position, player_position):
 		return int(math.atan2(y - py, x - px) / math.pi * resolution)
 
 	def radius(position):
+		(x, y) = position
 		max_radius = math.sqrt((vision.BULLET_RIGHT - vision.BULLET_LEFT) ** 2 + (vision.BULLET_TOP - vision.BULLET_BOTTOM) ** 2)
 		radius = math.sqrt((x - px) ** 2 + (y - py) ** 2)
 		return int(math.log(radius) / math.log(max_radius) * resolution)
