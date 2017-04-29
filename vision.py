@@ -7,7 +7,7 @@ PLAYER_Y = 185
 
 PLAYER_X_MIN = 37
 PLAYER_X_MAX = 119
-PLAYER_X_RANGE = player_x_max - player_x_min - 1
+PLAYER_X_RANGE = PLAYER_X_MAX - PLAYER_X_MIN - 1
 
 PLAYER_COLOR = numpy.array([50, 132, 50], numpy.uint8)
 
