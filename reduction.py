@@ -7,7 +7,7 @@ BULLET_BITS = 16
 class ReducedState(object):
 	def __init__(self, player_position, bullet_positions):
 		self.player_position = reduce_player(player_position)
-		self.bullet_positions = set(reduce_bullet(pos, player_position) for pos in bullet_positions)
+		self.bullet_positions = frozenset(reduce_bullet(pos, player_position) for pos in bullet_positions)
 
 	def __eq__(self, other):
 		return self.player_position == other.player_position and self.bullet_positions == other.bullet_positions
