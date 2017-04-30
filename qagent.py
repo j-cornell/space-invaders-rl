@@ -20,7 +20,7 @@ class QAgent(object):
         old_key = (self.old_state, action)
         new_key = (state, action)
         if old_key in self.qtab:
-            top_act = max(self.qtab[(state, self.actions[0])], self.qtab[(state, self.actions[1])], self.qtab[(state, self.actions[2])], self.qtab[(state, self.actions[3])])
+            top_act = max(self.qtab[(state, self.actions[0])], self.qtab[(state, self.actions[1])], self.qtab[(state, self.actions[2])], self.qtab[(state, self.actions[5])])
             self.qtab[old_key] = (1-alpha)*self.qtab[old_key] + alpha*(reward + gamma * top_act)
         else:
             self.qtab[old_key] = reward
