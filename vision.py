@@ -19,7 +19,7 @@ def detect_player_x(state):
 	for x in range(PLAYER_X_MIN, PLAYER_X_MAX):
 		if (state[PLAYER_Y][x] == PLAYER_COLOR).all():
 			return x
-	return None
+	return PLAYER_X_MIN
 
 def detect_bullets(state):
 	bullets = set()
