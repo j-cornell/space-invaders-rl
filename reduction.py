@@ -30,5 +30,5 @@ def reduce_bullet(position, player_x):
 		max_radius = math.sqrt((vision.BULLET_X_MAX - vision.BULLET_X_MIN) ** 2 + (vision.BULLET_Y_MAX - vision.BULLET_Y_MIN) ** 2)
 		radius = math.sqrt((x - player_x) ** 2 + (y - vision.PLAYER_Y) ** 2)
 		return int(math.log(radius) / math.log(max_radius) * resolution)
-	
+
 	return (radius(position), angle(position))
