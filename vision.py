@@ -25,6 +25,7 @@ def detect_bullets(state):
 	bullets = set()
 	for y in range(0, FRAME_HEIGHT, BULLET_HEIGHT):
 		for x in range(FRAME_WIDTH):
-			if (state[y][x] == BULLET_COLOR).all():
+			pixel = state[y,x]
+			if (pixel[0] == 142):
 				bullets.add((x, y))
 	return bullets
