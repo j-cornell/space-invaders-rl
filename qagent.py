@@ -16,7 +16,10 @@ class QAgent(object):
 		self.actions = [0, 1, 2, 5] #let 0 = noop, 1 = fire, 3 = right, 4 = left
 		if not table:
 			table = collections.defaultdict(float)
-		self.qtab = collections.defaultdict(float)
+		self.qtab = table
+		if not freq:
+			freq = collections.defaultdict(0)
+		self.freq = freq
 
 	def update(self, state, action, reward):
 		old_key = (self.old_state, action)
@@ -24,6 +27,7 @@ class QAgent(object):
 		top_act = max(self.qtab[(state, self.actions[0])], self.qtab[(state, self.actions[1])], self.qtab[(state, self.actions[2])], self.qtab[(state, self.actions[3])])
 		self.qtab[old_key] = (1-alpha)*self.qtab[old_key] + alpha*(reward + gamma * top_act)
 		self.old_state = state
+		self.freq[state] += 1
 
 	def act(self, state):
 		limit = 0
@@ -38,3 +42,6 @@ class QAgent(object):
 
 	def get_table(self):
 		return self.qtab
+	
+	def get_freq(self):
+		return self.freq
