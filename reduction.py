@@ -7,13 +7,21 @@ DISTANCE_RESOLUTION = 3
 class ReducedState(object):
 	def __init__(self, player_position, bullet_positions):
 		self.player_position = reduce_player(player_position)
-		self.bullet_positions = frozenset(reduce_bullet(pos, player_position) for pos in bullet_positions)
+		positions = [DISTANCE_RESOLUTION] * ANGLE_RESOLUTION
+		for pos in bullet_positions:
+			radius, angle = reduce_bullet(pos, player_position)
+			if angle != None:
+				positions[angle] = min(positions[angle], radius)
+		self.bullet_positions = tuple(positions)
 
 	def __eq__(self, other):
 		return self.player_position == other.player_position and self.bullet_positions == other.bullet_positions
 
 	def __hash__(self):
 		return hash((self.player_position, self.bullet_positions))
+
+	def __str__(self):
+		return str(tuple((self.player_position, self.bullet_positions)))
 
 def reduce_player(position):
 	if position < vision.PLAYER_X_MIN + 16:
@@ -27,7 +35,12 @@ def reduce_player(position):
 def reduce_bullet(position, player_x):
 	def angle(position):
 		(x, y) = position
-		return int(math.atan2(y - vision.PLAYER_Y, x - player_x) / math.pi * ANGLE_RESOLUTION)
+		x -= player_x
+		y -= vision.PLAYER_Y
+		quantized_angle = int((math.atan2(y, x) - math.pi/6) / (2*math.pi/3) * ANGLE_RESOLUTION)
+		if quantized_angle < 0 or quantized_angle >= ANGLE_RESOLUTION:
+			return None
+		return quantized_angle
 
 	def radius(position):
 		(x, y) = position
