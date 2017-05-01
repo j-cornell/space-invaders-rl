@@ -8,7 +8,6 @@ import pickle
 def reduce_state(state):
 	return reduction.ReducedState(vision.detect_player_x(state), vision.detect_bullets(state))
 
-table = None
 [filename_in, filename_out] = sys.argv[1].split(':')
 rounds = 1
 if len(sys.argv) > 2:
@@ -21,6 +20,8 @@ flag_draw = 'd' in flags
 flag_score = 'r' in flags
 flag_freq = 'f' in flags
 
+table = None
+freq = None
 if filename_in:
 	with open(filename_in, 'rb') as f:
 		table = pickle.load(f)
@@ -50,7 +51,7 @@ def do_round():
 def print_freq():
 	freq = agent.get_freq()
 	for f in sorted(freq, key=freq.__getitem__, reverse=True):
-		print('%\t%'.format(freq[f], f))
+		print('{}\t{}'.format(freq[f], f))
 
 for i in range(rounds):
 	score = do_round()

@@ -11,14 +11,14 @@ gamma = -0.5
 TAU = 0.1
 
 class QAgent(object):
-	def __init__(self, state, table=None):
+	def __init__(self, state, table=None, freq=None):
 		self.old_state = state
 		self.actions = [0, 1, 2, 5] #let 0 = noop, 1 = fire, 3 = right, 4 = left
 		if not table:
 			table = collections.defaultdict(float)
 		self.qtab = table
 		if not freq:
-			freq = collections.defaultdict(0)
+			freq = collections.defaultdict(int)
 		self.freq = freq
 
 	def update(self, state, action, reward):
