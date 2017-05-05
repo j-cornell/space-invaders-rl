@@ -19,6 +19,7 @@ if len(sys.argv) > 3:
 flag_draw = 'd' in flags
 flag_score = 'r' in flags
 flag_freq = 'f' in flags
+flag_impotent = 'i' in flags
 
 table = None
 freq = None
@@ -36,16 +37,26 @@ agent = qagent.QAgent(reduce_state(initial_state), table=table, freq=freq)
 
 def do_round():
 	total_reward = 0
+	n_frames = 0
 	done = False
 	reduced_state = reduce_state(jim.reset())
 	while not done:
 		action = agent.act(reduced_state)
-		(state, reward, done, _info) = jim.step(action)
+		real_action = action
+		if flag_impotent:
+			if action == 5:
+				real_action = 3
+			elif action == 1:
+				real_action = 0
+		(state, reward, done, _info) = jim.step(real_action)
+		if flag_impotent:
+			reward = n_frames/100.0
 		reduced_state = reduce_state(state)
 		agent.update(reduced_state, action, reward)
 		total_reward += reward
 		if flag_draw:
 			jim.render()
+		n_frames += 1
 	return total_reward
 
 def print_freq():
