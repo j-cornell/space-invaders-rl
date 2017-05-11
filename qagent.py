@@ -22,6 +22,7 @@ class QAgent(object):
 		self.old_state = state
 
 	def act(self, state):
+		# Softmax action choice
 		limit = 0
 		for act in self.actions:
 			limit += (math.e ** self.qtab[(state, act)]) / TAU
