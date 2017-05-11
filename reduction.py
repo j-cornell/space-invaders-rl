@@ -1,14 +1,8 @@
 import vision
 import math
 
-<<<<<<< HEAD
-# bits allocated to each component of state
-PLAYER_BITS = 3
-BULLET_BITS = 16
-=======
 ANGLE_RESOLUTION = 6
 DISTANCE_RESOLUTION = 3
->>>>>>> anders/master
 
 class ReducedState(object):
 	"""
@@ -44,11 +38,6 @@ def reduce_player(position):
 #	return int((position - vision.PLAYER_X_MIN) / (vision.PLAYER_X_MAX - vision.PLAYER_X_MIN) * 2 ** PLAYER_BITS)
 
 def reduce_bullet(position, player_x):
-<<<<<<< HEAD
-	resolution = int(math.sqrt(BULLET_BITS)) # number of distinct angles and radii
-
-=======
->>>>>>> anders/master
 	def angle(position):
 		"""
 		Determines the standard position angle of a position with respect to the player (rounded)
@@ -70,11 +59,6 @@ def reduce_bullet(position, player_x):
 		(x, y) = position
 		max_radius = math.sqrt((vision.BULLET_X_MAX - vision.BULLET_X_MIN) ** 2 + (vision.BULLET_Y_MAX - vision.BULLET_Y_MIN) ** 2)
 		radius = math.sqrt((x - player_x) ** 2 + (y - vision.PLAYER_Y) ** 2)
-<<<<<<< HEAD
-		return int(math.log(radius) / math.log(max_radius) * resolution)
-
-=======
 		return int(math.log(radius) / math.log(max_radius) * DISTANCE_RESOLUTION)
 	
->>>>>>> anders/master
 	return (radius(position), angle(position))
